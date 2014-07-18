@@ -21,6 +21,7 @@ function ctor(opts, read) {
   inherits(Class, Readable)
   function Class() {
     if (!(this instanceof Class)) return new Class
+    this._reading = false
     Readable.call(this, opts)
   }
 
@@ -28,11 +29,14 @@ function ctor(opts, read) {
   Class.prototype._read = function(size) {
     var self = this
 
+    if (this._reading) return
+    this._reading = true
     this._from(size, check)
     function check(err, data) {
       if (err) return self.emit('error', err)
       if (data === null) return self.push(null)
-      if (self.push(data)) self._from(size, check)
+      self._reading = false
+      if (self.push(data)) self._read()
     }
   }
 
