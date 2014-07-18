@@ -56,6 +56,7 @@ function obj(opts, read) {
 
   opts = defaults(opts)
   opts.objectMode = true
+  opts.highWaterMark = 16
 
   return from2(opts, read)
 }
