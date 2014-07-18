@@ -6,8 +6,17 @@ module.exports = from2
 from2.ctor = ctor
 from2.obj = obj
 
+var Proto = ctor()
+
 function from2(opts, read) {
-  return new (ctor(opts, read))
+  if (typeof opts === 'function') {
+    read = opts
+    opts = {}
+  }
+
+  var rs = new Proto(opts)
+  rs._from = read
+  return rs
 }
 
 function ctor(opts, read) {
@@ -19,9 +28,9 @@ function ctor(opts, read) {
   opts = defaults(opts)
 
   inherits(Class, Readable)
-  function Class() {
-    if (!(this instanceof Class)) return new Class
-    Readable.call(this, opts)
+  function Class(override) {
+    if (!(this instanceof Class)) return new Class(override)
+    Readable.call(this, override || opts)
   }
 
   Class.prototype._from = read
