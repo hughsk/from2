@@ -41,3 +41,20 @@ test('old mode', function(t) {
     t.end()
   })
 })
+
+test('destroy', function(t) {
+  var stream = from(function(size, next) {
+    process.nextTick(function() {
+      next(null, 'no')
+    })
+  })
+
+  stream.on('data', function(data) {
+    t.ok(false)
+  }).on('close', function() {
+    t.ok(true)
+    t.end()
+  })
+
+  stream.destroy()
+})
