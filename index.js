@@ -31,6 +31,7 @@ function ctor(opts, read) {
   function Class(override) {
     if (!(this instanceof Class)) return new Class(override)
     this._reading = false
+    this.destroyed = false
     Readable.call(this, override || opts)
   }
 
@@ -38,15 +39,23 @@ function ctor(opts, read) {
   Class.prototype._read = function(size) {
     var self = this
 
-    if (this._reading) return
+    if (this._reading || this.destroyed) return
     this._reading = true
     this._from(size, check)
     function check(err, data) {
+      if (self.destroyed) return
       if (err) return self.emit('error', err)
       if (data === null) return self.push(null)
       self._reading = false
       if (self.push(data)) self._read()
     }
+  }
+
+  Class.prototype.destroy = function(err) {
+    if (this.destroyed) return
+    this.destroyed = true
+    if (err) this.emit('error', err)
+    this.emit('close')
   }
 
   return Class
