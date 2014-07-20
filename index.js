@@ -44,7 +44,7 @@ function ctor(opts, read) {
     this._from(size, check)
     function check(err, data) {
       if (self.destroyed) return
-      if (err) return self.emit('error', err)
+      if (err) return self.destroy(err)
       if (data === null) return self.push(null)
       self._reading = false
       if (self.push(data)) self._read()
