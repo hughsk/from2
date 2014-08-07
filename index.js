@@ -54,8 +54,12 @@ function ctor(opts, read) {
   Class.prototype.destroy = function(err) {
     if (this.destroyed) return
     this.destroyed = true
-    if (err) this.emit('error', err)
-    this.emit('close')
+
+    var self = this
+    process.nextTick(function() {
+      if (err) self.emit('error', err)
+      self.emit('close')
+    })
   }
 
   return Class
