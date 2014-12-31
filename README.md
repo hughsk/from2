@@ -1,5 +1,7 @@
 # from2 [![Flattr this!](https://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=hughskennedy&url=http://github.com/hughsk/from2&title=from2&description=hughsk/from2%20on%20GitHub&language=en_GB&tags=flattr,github,javascript&category=software)[![experimental](http://hughsk.github.io/stability-badges/dist/experimental.svg)](http://github.com/hughsk/stability-badges) #
 
+`from2` is a high-level module for creating readable streams that properly handle backpressure.
+
 Convience wrapper for
 [readable-stream](http://github.com/isaacs/readable-stream)'s `ReadableStream`
 base class, with an API lifted from
