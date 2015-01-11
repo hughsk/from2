@@ -71,3 +71,16 @@ test('arrays', function (t) {
     t.end()
   })
 })
+
+test('obj arrays', function (t) {
+  var input = [{foo:'a'}, {foo:'b'}, {foo:'c'}]
+  var stream = from.obj(input)
+  var output = []
+  stream.on('data', function (letter) {
+    output.push(letter)
+  })
+  stream.on('end', function () {
+    t.deepEqual(input, output)
+    t.end()
+  })
+})
