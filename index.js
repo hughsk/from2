@@ -20,11 +20,9 @@ function from2(opts, read) {
     read = opts
     opts = {}
   }
-  
-  if (Array.isArray(read)) read = toFunction(read)
 
   var rs = new Proto(opts)
-  rs._from = read
+  rs._from = Array.isArray(read) ? toFunction(read) : read
   return rs
 }
 
