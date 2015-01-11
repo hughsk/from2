@@ -8,18 +8,20 @@ from2.obj = obj
 
 var Proto = ctor()
 
+function toFunction(list) {
+  list = list.slice()
+  return function (_, cb) {
+    cb(null, list.length ? list.shift() : null)
+  }
+}
+
 function from2(opts, read) {
   if (typeof opts !== 'object' || Array.isArray(opts)) {
     read = opts
     opts = {}
   }
   
-  if(Array.isArray(read)) {
-    var list = read.slice()
-    read = function (_, cb) {
-      cb(null, list.length ? list.shift() : null)
-    }
-  }
+  if (Array.isArray(read)) read = toFunction(read)
 
   var rs = new Proto(opts)
   rs._from = read
