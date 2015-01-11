@@ -17,7 +17,7 @@ function from2(opts, read) {
   if(Array.isArray(read)) {
     var list = read.slice()
     read = function (_, cb) {
-      cb(null, read.length ? read.shift() : null)
+      cb(null, list.length ? list.shift() : null)
     }
   }
 
@@ -73,7 +73,7 @@ function ctor(opts, read) {
 }
 
 function obj(opts, read) {
-  if (typeof opts === 'function') {
+  if (typeof opts === 'function' || Array.isArray(opts)) {
     read = opts
     opts = {}
   }
