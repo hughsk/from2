@@ -9,9 +9,16 @@ from2.obj = obj
 var Proto = ctor()
 
 function from2(opts, read) {
-  if (typeof opts === 'function') {
+  if (typeof opts !== 'object' || Array.isArray(opts)) {
     read = opts
     opts = {}
+  }
+  
+  if(Array.isArray(read)) {
+    var list = read.slice()
+    read = function (_, cb) {
+      cb(null, read.length ? read.shift() : null)
+    }
   }
 
   var rs = new Proto(opts)

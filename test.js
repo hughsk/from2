@@ -58,3 +58,16 @@ test('destroy', function(t) {
 
   stream.destroy()
 })
+
+test('arrays', function (t) {
+  var input = ['a', 'b', 'c']
+  var stream = from(input)
+  var output = []
+  stream.on('data', function (letter) {
+    output.push(letter.toString())
+  })
+  stream.on('end', function () {
+    t.deepEqual(input, output)
+    t.end()
+  })
+})
