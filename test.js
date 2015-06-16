@@ -9,7 +9,7 @@ var tmp = path.resolve(
 
 function fromString(string) {
   return from(function(size, next) {
-    if (string.length <= 0) return next()
+    if (string.length <= 0) return next(null, null)
     var chunk = string.slice(0, size)
     string = string.slice(size)
     next(null, chunk)
