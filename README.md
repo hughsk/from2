@@ -26,13 +26,11 @@ string:
 ``` javascript
 var from = require('from2')
 
-module.exports = fromString
-
 function fromString(string) {
   return from(function(size, next) {
     // if there's no more content
     // left in the string, close the stream.
-    if (string.length <= 0) return cb(null, null)
+    if (string.length <= 0) return next(null, null)
 
     // Pull in a new chunk of text,
     // removing it from the string.
