@@ -94,6 +94,7 @@ test('arrays can emit errors', function (t) {
     output.push(letter.toString())
   })
   stream.on('error', function(e){
+    t.deepEqual(['a', 'b'], output)
     t.equal('ooops', e.message)
     t.end()
   })  
@@ -110,6 +111,7 @@ test('obj arrays can emit errors', function (t) {
     output.push(letter)
   })
   stream.on('error', function(e){
+    t.deepEqual([{foo:'a'}, {foo:'b'}], output)
     t.equal('ooops', e.message)
     t.end()
   })
