@@ -11,7 +11,14 @@ var Proto = ctor()
 function toFunction(list) {
   list = list.slice()
   return function (_, cb) {
-    cb(null, list.length ? list.shift() : null)
+    var err = null
+    var item = list.length ? list.shift() : null
+    if (item instanceof Error) {
+      err = item
+      item = null
+    }
+
+    cb(err, item)
   }
 }
 

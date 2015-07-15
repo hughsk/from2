@@ -84,3 +84,40 @@ test('obj arrays', function (t) {
     t.end()
   })
 })
+
+
+test('arrays can emit errors', function (t) {
+  var input = ['a', 'b', new Error('ooops'), 'c']
+  var stream = from(input)
+  var output = []
+  stream.on('data', function (letter) {
+    output.push(letter.toString())
+  })
+  stream.on('error', function(e){
+    t.deepEqual(['a', 'b'], output)
+    t.equal('ooops', e.message)
+    t.end()
+  })  
+  stream.on('end', function () {
+    t.fail('the stream should have errored')
+  })
+})
+
+test('obj arrays can emit errors', function (t) {
+  var input = [{foo:'a'}, {foo:'b'}, new Error('ooops'), {foo:'c'}]
+  var stream = from.obj(input)
+  var output = []
+  stream.on('data', function (letter) {
+    output.push(letter)
+  })
+  stream.on('error', function(e){
+    t.deepEqual([{foo:'a'}, {foo:'b'}], output)
+    t.equal('ooops', e.message)
+    t.end()
+  })
+  stream.on('end', function () {
+    t.fail('the stream should have errored')
+  })
+})
+
+
