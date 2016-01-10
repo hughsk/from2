@@ -60,6 +60,10 @@ of creating one-off streams on each call.
 Takes the same options as `from2`, instead returning a constructor which you
 can use to create new streams.
 
+### See Also
+
+- [from2-array](https://github.com/binocarlos/from2-array) - Create a from2 stream based on an array of source values.
+
 ## License ##
 
 MIT. See [LICENSE.md](http://github.com/hughsk/from2/blob/master/LICENSE.md) for details.
