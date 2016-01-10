@@ -63,6 +63,7 @@ can use to create new streams.
 ### See Also
 
 - [from2-array](https://github.com/binocarlos/from2-array) - Create a from2 stream based on an array of source values.
+- [from2-string](https://github.com/yoshuawuyts/from2-string) - Create a stream from a string. Sugary wrapper around from2.
 
 ## License ##
 
