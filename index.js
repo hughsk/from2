@@ -45,24 +45,27 @@ function ctor(opts, read) {
   function Class(override) {
     if (!(this instanceof Class)) return new Class(override)
     this._reading = false
+    this._callback = check
     this.destroyed = false
     Readable.call(this, override || opts)
-  }
 
-  Class.prototype._from = read
-  Class.prototype._read = function(size) {
     var self = this
+    var hwm = this._readableState.highWaterMark
 
-    if (this._reading || this.destroyed) return
-    this._reading = true
-    this._from(size, check)
     function check(err, data) {
       if (self.destroyed) return
       if (err) return self.destroy(err)
       if (data === null) return self.push(null)
       self._reading = false
-      if (self.push(data)) self._read()
+      if (self.push(data)) self._read(hwm)
     }
+  }
+
+  Class.prototype._from = read
+  Class.prototype._read = function(size) {
+    if (this._reading || this.destroyed) return
+    this._reading = true
+    this._from(size, this._callback)
   }
 
   Class.prototype.destroy = function(err) {
