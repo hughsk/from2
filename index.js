@@ -29,7 +29,7 @@ function from2(opts, read) {
   }
 
   var rs = new Proto(opts)
-  rs._from = Array.isArray(read) ? toFunction(read) : read
+  rs._from = Array.isArray(read) ? toFunction(read) : (read || noop)
   return rs
 }
 
@@ -94,6 +94,8 @@ function obj(opts, read) {
 
   return from2(opts, read)
 }
+
+function noop () {}
 
 function defaults(opts) {
   opts = opts || {}
