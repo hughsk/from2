@@ -61,7 +61,7 @@ function ctor(opts, read) {
     }
   }
 
-  Class.prototype._from = read
+  Class.prototype._from = read || noop
   Class.prototype._read = function(size) {
     if (this._reading || this.destroyed) return
     this._reading = true
