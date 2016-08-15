@@ -1,7 +1,7 @@
 {
   "name": "from2",
   "description": "Convenience wrapper for ReadableStream, with an API lifted from \"from\" and \"through2\"",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "main": "index.js",
   "scripts": {
     "test": "node test"
