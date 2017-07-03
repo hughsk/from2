@@ -57,7 +57,7 @@ function ctor(opts, read) {
       if (err) return self.destroy(err)
       if (data === null) return self.push(null)
       self._reading = false
-      if (self.push(data)) self._read(hwm)
+      if (data === undefined || self.push(data)) self._read(hwm)
     }
   }
 
