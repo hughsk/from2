@@ -135,7 +135,6 @@ test('not push undefined', function(t) {
       });
     }
   })
-
   stream.on('data', function(data) {
     t.notEqual(data, undefined)
   }).on('end', function() {
