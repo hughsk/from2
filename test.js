@@ -120,4 +120,25 @@ test('obj arrays can emit errors', function (t) {
   })
 })
 
-
+test('not push undefined', function(t) {
+  var first = true;
+  var stream = from.obj(function(size, next) {
+    if (first){
+      process.nextTick(function() {
+        stream.push({});
+        next();
+      });
+      first = false;
+    } else {
+      process.nextTick(function() {
+        next(null,null);
+      });
+    }
+  })
+  stream.on('data', function(data) {
+    t.notEqual(data, undefined)
+  }).on('end', function() {
+    t.ok(true)
+    t.end()
+  })
+})
