@@ -2,7 +2,7 @@
 
 `from2` is a high-level module for creating readable streams that properly handle backpressure.
 
-Convience wrapper for
+Convenience wrapper for
 [readable-stream](http://github.com/isaacs/readable-stream)'s `ReadableStream`
 base class, with an API lifted from
 [from](http://github.com/dominictarr/from) and
