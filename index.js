@@ -45,6 +45,8 @@ function ctor(opts, read) {
   function Class(override) {
     if (!(this instanceof Class)) return new Class(override)
     this._reading = false
+    this._sync = false
+    this._readSize = null
     this._callback = check
     this.destroyed = false
     Readable.call(this, override || opts)
@@ -64,8 +66,19 @@ function ctor(opts, read) {
   Class.prototype._from = read || noop
   Class.prototype._read = function(size) {
     if (this._reading || this.destroyed) return
-    this._reading = true
-    this._from(size, this._callback)
+    if (this._sync) {
+      this._readSize = size
+      return
+    }
+    // Synchronous callbacks request another read without growing the stack.
+    do {
+      this._readSize = null
+      this._reading = true
+      this._sync = true
+      this._from(size, this._callback)
+      this._sync = false
+      if (this._readSize !== null) size = this._readSize
+    } while (this._readSize !== null && !this.destroyed)
   }
 
   Class.prototype.destroy = function(err) {
